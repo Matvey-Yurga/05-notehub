@@ -5,13 +5,10 @@ const token = import.meta.env.VITE_NOTEHUB_TOKEN;
 
 interface PaginatedResponse {
     notes: Note[]; 
-    data: Note[];
     page: number;
-    perPage: number;
-    totalPages: number;
 }
 
-export const fetchNotes = async (page: number, query: string) => {
+export const fetchNotes = async (page: number, query: string): Promise<PaginatedResponse> => {
      
     const response = await axios.get<PaginatedResponse>("/notes", {
         headers: {
@@ -37,7 +34,7 @@ export const createNote = async (noteData: NoteData): Promise<Note> => {
 }
 
 
-export const deleteNote = async (noteId: string): Promise<Note> => { 
+export const deleteNote = async (noteId: string | number): Promise<Note> => { 
     const response = await axios.delete<Note>(`/notes/${noteId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
