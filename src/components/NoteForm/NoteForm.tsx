@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createNote } from "../../services/noteService";
 import type { NoteData } from "../../types/note";
     interface NoteFormProps {
-        onCloseModal: () => void;
+        onClose: () => void;
     }
     const noteSchema = Yup.object().shape({
         title: Yup.string().required("Title is required").min(3, "Title must be at least 3 characters").max(50, "Title must be at most 50 characters"),
@@ -13,13 +13,13 @@ import type { NoteData } from "../../types/note";
         tag: Yup.string().oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"]).required("Tag is required")
     });
 
-export default function NoteForm({ onCloseModal }: NoteFormProps) { 
+export default function NoteForm({ onClose }: NoteFormProps) { 
     const queryClient = useQueryClient();
 const { mutate } = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['notes'] });
-        onCloseModal();
+        onClose();
     }
 });
     const handleSubmit = (values: NoteData, formikHelper: FormikHelpers<NoteData>) => {
@@ -65,7 +65,7 @@ const { mutate } = useMutation({
   </div>
 
   <div className={css.actions}>
-    <button type="button" className={css.cancelButton} onClick={onCloseModal}>
+    <button type="button" className={css.cancelButton} onClick={onClose}>
       Cancel
     </button>
     <button

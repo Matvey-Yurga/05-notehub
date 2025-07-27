@@ -15,7 +15,7 @@ export default function App() {
     const handleOpenModal = () => { setIsModalOpen(true); };
     const handleCloseModal = () => { setIsModalOpen(false); }; 
     const [page, setPage] = useState(1);
-    const [inputVailue, setInputeValue] = useState("");
+    const [inputValue, setInputeValue] = useState("");
     const updateSerchQuery = useDebouncedCallback(
         (query: string) => {
             setInputeValue(query);
@@ -24,8 +24,8 @@ export default function App() {
         300
     );
    const { data, isLoading, isError } = useQuery({
-    queryKey: ["notes", page, inputVailue ],
-       queryFn: () => fetchNotes(page, inputVailue),
+    queryKey: ["notes", page, inputValue ],
+       queryFn: () => fetchNotes(page, inputValue),
       placeholderData: keepPreviousData,
   });
 
@@ -43,7 +43,7 @@ export default function App() {
 
         {isModalOpen && (
           <Modal onClose={() => handleCloseModal()}>
-            <NoteForm onCloseModal={handleCloseModal} />
+            <NoteForm onClose={handleCloseModal} />
           </Modal>
         )}
       </div>
