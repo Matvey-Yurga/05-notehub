@@ -6,6 +6,7 @@ const token = import.meta.env.VITE_NOTEHUB_TOKEN;
 interface PaginatedResponse {
     notes: Note[]; 
     page: number;
+    totalPages: number;
 }
 
 export const fetchNotes = async (page: number, query: string): Promise<PaginatedResponse> => {
